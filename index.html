@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>i love you Kaiya</title>
+<link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+:root{--c1:#F7EEED;--c2:#FAE6E7;--c3:#F7D1D8;--c4:#F4BBC9;--c5:#F6A6BB;--deep:#e0728f;--txt:#3d2530}
+body{font-family:'Chewy',cursive;background:var(--c1) url('https://files.catbox.moe/vvhdw0.jpg') center/cover fixed;min-height:100vh;overflow-x:hidden;color:var(--txt)}
+.deco{position:fixed;pointer-events:none;z-index:0;animation:rise linear infinite;opacity:.25;font-size:1.3rem}
+@keyframes rise{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-15vh) rotate(360deg)}}
+.loading{position:fixed;inset:0;background:rgba(247,238,237,.97);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s}
+.loading.show{opacity:1}
+.l-spin{width:68px;height:68px;background:url('https://files.catbox.moe/fsi72g.png') center/contain no-repeat;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.l-txt{font-size:1.2rem;color:var(--c5)}
+.page{display:none;min-height:100vh;padding:14px 14px 80px;z-index:1;position:relative}
+.page.active{display:block}
+.card{background:rgba(255,248,246,.92);backdrop-filter:blur(14px);border-radius:36px;padding:24px 18px 22px;border:3px solid var(--c4);box-shadow:0 9px 0 var(--c5),0 16px 36px rgba(246,166,187,.18);max-width:430px;margin:0 auto 14px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--c3),var(--c5),var(--deep),var(--c4));background-size:200%;animation:shimmer 2.5s linear infinite}
+@keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+h2{font-size:1.9rem;color:var(--c5);text-align:center;margin-bottom:8px;text-shadow:2px 2px 0 var(--c3)}
+p{font-size:1.1rem;color:var(--txt);margin:7px 0}
+.lock-row{display:flex;justify-content:flex-end;max-width:430px;margin:0 auto 8px}
+.lock-btn{background:var(--c5);color:white;border:3px solid white;border-radius:30px;padding:7px 16px;font-size:1rem;font-family:'Chewy',cursive;box-shadow:0 4px 0 var(--deep);cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.lock-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--deep)}
+.nav{display:none;justify-content:space-between;max-width:430px;margin:0 auto 6px;gap:10px}
+.nav.show{display:flex}
+.nav-btn{flex:1;padding:11px;background:linear-gradient(135deg,var(--c4),var(--c5));color:white;border:none;border-radius:30px;font-family:'Chewy',cursive;font-size:1.2rem;box-shadow:0 5px 0 var(--deep);cursor:pointer}
+.nav-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--deep)}
+.nav-btn:disabled{opacity:.35;pointer-events:none;transform:none}
+.avatar{width:110px;height:110px;border-radius:50%;border:6px solid white;box-shadow:0 8px 0 var(--c4),0 14px 24px rgba(246,166,187,.25);overflow:hidden;margin:4px auto 18px;animation:pulse-ring 2s ease-in-out infinite}
+@keyframes pulse-ring{0%,100%{box-shadow:0 8px 0 var(--c4),0 0 0 0 rgba(246,166,187,.5)}50%{box-shadow:0 8px 0 var(--c4),0 0 0 10px rgba(246,166,187,0)}}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.digits{display:flex;gap:10px;justify-content:center;margin:18px 0 12px}
+.digit{width:52px;height:62px;background:white;border:3px solid var(--c4);border-radius:16px;font-size:2rem;display:flex;align-items:center;justify-content:center;color:var(--c5);box-shadow:0 5px 0 var(--c3);transition:all .15s}
+.digit.filled{background:var(--c2);border-color:var(--c5);transform:scale(1.05)}
+.digit.shake{animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:235px;margin:14px auto 0}
+.num{width:68px;height:68px;border:none;border-radius:50%;background:linear-gradient(145deg,var(--c4),var(--c5));font-family:'Chewy',cursive;font-size:2.2rem;color:white;box-shadow:0 6px 0 var(--deep);display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;transition:transform .08s,box-shadow .08s}
+.num:active{transform:translateY(5px);box-shadow:0 1px 0 var(--deep)}
+.num.clr{grid-column:span 3;width:100%;border-radius:30px;font-size:1.4rem}
+.err-msg{font-size:1rem;color:#d43f6b;text-align:center;margin-top:10px;min-height:22px;opacity:0;transition:opacity .2s}
+.err-msg.show{opacity:1}
+.big-photo{width:78%;max-width:240px;border-radius:28px;border:6px solid white;box-shadow:0 10px 0 var(--c4),0 16px 30px rgba(246,166,187,.2);display:block;margin:4px auto 18px}
+.letter-long{background:var(--c1);border-radius:26px;padding:22px 16px;border:3px dashed var(--c5);font-size:1.1rem;line-height:1.75;color:var(--txt);box-shadow:inset 0 0 0 4px var(--c2),0 6px 0 var(--c3);max-height:340px;overflow-y:auto;white-space:pre-line}
+.puzzle-wrap{background:white;border-radius:24px;border:3px solid var(--c4);box-shadow:0 6px 0 var(--c5);padding:10px;position:relative;overflow:hidden;margin-bottom:12px}
+.puzzle-board{width:100%;height:310px;position:relative;background:var(--c2);border-radius:14px;overflow:hidden}
+.puzzle-piece{position:absolute;cursor:grab;border-radius:6px;box-shadow:0 3px 8px rgba(0,0,0,.1);z-index:1;transition:box-shadow .1s}
+.puzzle-piece.dragging{cursor:grabbing;box-shadow:0 8px 20px rgba(0,0,0,.22);z-index:10;transform:scale(1.04)}
+.puzzle-piece.correct{cursor:default;box-shadow:0 0 0 3px var(--c5)}
+.puzzle-done{display:none;position:absolute;inset:0;background:rgba(247,238,237,.94);backdrop-filter:blur(4px);flex-direction:column;align-items:center;justify-content:center;border-radius:14px;z-index:20;gap:6px}
+.puzzle-done.show{display:flex}
+.puzzle-done .yay{font-size:3rem;animation:bounce 1s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.puzz-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.pbtn{padding:9px 20px;border:none;border-radius:30px;background:linear-gradient(135deg,var(--c4),var(--c5));color:white;font-family:'Chewy',cursive;font-size:1.2rem;box-shadow:0 4px 0 var(--deep);cursor:pointer}
+.pbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--deep)}
+.moves-lbl{font-size:1rem;color:var(--c5);text-align:center;margin-top:8px}
+.action-row{display:flex;gap:14px;justify-content:center;margin:12px 0}
+.action-card{flex:1;max-width:145px;background:white;border:4px solid var(--c5);border-radius:30px;padding:18px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 9px 0 var(--c4),0 14px 24px rgba(246,166,187,.15);cursor:pointer;transition:transform .1s,box-shadow .1s}
+.action-card:active{transform:translateY(7px);box-shadow:0 2px 0 var(--c4)}
+.action-card img{width:56px;height:56px;object-fit:contain}
+.action-card span{font-size:1.1rem;color:var(--c5);background:var(--c1);padding:4px 14px;border-radius:20px;border:2px solid var(--c3)}
+.rain-icon{position:fixed;pointer-events:none;z-index:9999;top:-50px;background:url('https://files.catbox.moe/bzj2ty.png') center/contain no-repeat;animation:rain 2.5s linear forwards}
+@keyframes rain{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+.heart{position:absolute;pointer-events:none;animation:heartup 2.5s ease-in-out forwards}
+@keyframes heartup{to{transform:translateY(-120px);opacity:0}}
+</style>
+</head>
+<body>
+<div class="deco" style="left:5%;animation-duration:12s">💗</div>
+<div class="deco" style="left:22%;animation-duration:16s;animation-delay:3s">🌸</div>
+<div class="deco" style="left:45%;animation-duration:10s;animation-delay:1s">✨</div>
+<div class="deco" style="left:68%;animation-duration:14s;animation-delay:5s">🎀</div>
+<div class="deco" style="left:88%;animation-duration:11s;animation-delay:2s">🌷</div>
+<div class="loading" id="loading"><div class="l-spin"></div><div class="l-txt">loading... 💗</div></div>
+
+<!-- PAGE 1: PASSCODE -->
+<div class="page active" id="page1">
+  <div class="lock-row"><div class="lock-btn" id="lb1">🔒 lock</div></div>
+  <div class="card" style="text-align:center">
+    <h2>🔐 secret code</h2>
+    <p style="color:var(--c5);font-size:.95rem;margin-bottom:4px">enter the passcode to unlock ✨</p>
+    <div class="avatar"><img src="images/photo_6142786512_1774309867.jpg" alt="photo" id="thumbImg"></div>
+    <div class="digits">
+      <div class="digit" id="d1"></div>
+      <div class="digit" id="d2"></div>
+      <div class="digit" id="d3"></div>
+      <div class="digit" id="d4"></div>
+    </div>
+    <div class="numpad">
+      <button class="num" data-n="1">1</button><button class="num" data-n="2">2</button><button class="num" data-n="3">3</button>
+      <button class="num" data-n="4">4</button><button class="num" data-n="5">5</button><button class="num" data-n="6">6</button>
+      <button class="num" data-n="7">7</button><button class="num" data-n="8">8</button><button class="num" data-n="9">9</button>
+      <button class="num" data-n="0">0</button>
+      <button class="num clr" id="clrBtn">⌫ clear</button>
+    </div>
+    <div class="err-msg" id="errMsg">wrong passcode 💔</div>
+  </div>
+</div>
+
+<!-- PAGE 2: LETTER -->
+<div class="page" id="page2">
+  <div class="lock-row"><div class="lock-btn" id="lb2">🔒 lock</div></div>
+  <div class="card">
+    <h2>💌 for you</h2>
+    <img src="images/photo_6142786512_1774309888.jpg" alt="photo" class="big-photo" id="bigPhoto">
+    <div class="letter-long" id="letterLong">hi pacar ku yang lucu, cantik, nan mengemaskan. terimakasih ya 5 harinya telah menemani keseharian ku, meskipun sebentar tapi jujur aku senang banget bisa kenal kamu. kamu baik, semoga kebaikan selalu mengiringi mu ya. jaga diri kamu ya, Kaiya. thank you for trying to be my best lover. jalankan kehidupan dengan pilihan kamu, dan always happy ya? <br><br>i love you, Kaiya.</div>
+  </div>
+</div>
+
+<!-- PAGE 3: PUZZLE -->
+<div class="page" id="page3">
+  <div class="lock-row"><div class="lock-btn" id="lb3">🔒 lock</div></div>
+  <div class="card">
+    <h2>🧩 mini game!</h2>
+    <p style="text-align:center;color:var(--c5);font-size:.95rem;margin-bottom:10px">drag the pieces to solve it~</p>
+    <div class="puzzle-wrap">
+      <div class="puzzle-board" id="puzzleBoard"></div>
+      <div class="puzzle-done" id="puzzleDone">
+        <span class="yay">🎉</span>
+        <h2 style="font-size:1.6rem">you did it!!</h2>
+        <p style="font-size:.95rem;color:var(--c5)">moves: <span id="moveCount">0</span></p>
+        <div class="puzz-btns">
+          <button class="pbtn" id="replayBtn">play again</button>
+          <button class="pbtn" id="nextPuzz">next →</button>
+        </div>
+      </div>
+    </div>
+    <div class="puzz-btns"><button class="pbtn" id="shuffleBtn">🔀 shuffle</button></div>
+    <div class="moves-lbl">moves: <span id="curMoves">0</span></div>
+  </div>
+</div>
+
+<!-- PAGE 4: HUG & KISS -->
+<div class="page" id="page4">
+  <div class="lock-row"><div class="lock-btn" id="lb4">🔒 lock</div></div>
+  <div class="card" style="text-align:center">
+    <h2>💗 this is for you</h2>
+    <p style="color:var(--c5);margin-bottom:4px">tap to receive your gift~ ✨</p>
+    <div class="action-row">
+      <div class="action-card" id="hugCard">
+        <img src="https://files.catbox.moe/fsi72g.png" alt="hug">
+        <span>hug 🤗</span>
+      </div>
+      <div class="action-card" id="kissCard">
+        <img src="https://files.catbox.moe/wdug97.png" alt="kiss">
+        <span>kiss 😘</span>
+      </div>
+    </div>
+    <p style="font-size:.9rem;color:var(--c4);margin-top:10px">tap as many times as you want 💕</p>
+  </div>
+</div>
+
+<div class="nav" id="navBar">
+  <button class="nav-btn" id="prevBtn" disabled>⇦ prev</button>
+  <button class="nav-btn" id="nextBtn">next ⇨</button>
+</div>
+
+<script>
+(function(){
+  const PASSCODE="1823";
+  const PUZZLE_IMAGE="images/photo_6142786512_1774309887.jpg";
+  const loading=document.getElementById('loading');
+  const allPages=[document.getElementById('page1'),document.getElementById('page2'),document.getElementById('page3'),document.getElementById('page4')];
+  const navBar=document.getElementById('navBar'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn');
+  let cur=1;
+  function showLoad(cb){loading.classList.add('show');setTimeout(()=>{loading.classList.remove('show');if(cb)cb();},380)}
+  function gotoPage(n){
+    showLoad(()=>{
+      allPages.forEach((p,i)=>i+1===n?p.classList.add('active'):p.classList.remove('active'));
+      cur=n;navBar.className=n>=2?'nav show':'nav';
+      prevBtn.disabled=n<=2;nextBtn.disabled=n>=4;
+      window.scrollTo({top:0,behavior:'smooth'});
+      if(n===3)setTimeout(initPuzzle,120);
+    });
+  }
+  ['lb1','lb2','lb3','lb4'].forEach(id=>{
+    document.getElementById(id).addEventListener('click',()=>{if(confirm('back to lock screen?')){gotoPage(1);code='';updateDigits();}});
+  });
+  prevBtn.addEventListener('click',()=>{if(cur>2)gotoPage(cur-1)});
+  nextBtn.addEventListener('click',()=>{if(cur<4)gotoPage(cur+1)});
+  const digitEls=['d1','d2','d3','d4'].map(id=>document.getElementById(id));
+  const errMsg=document.getElementById('errMsg');
+  let code='';
+  function updateDigits(){digitEls.forEach((d,i)=>{if(i<code.length){d.textContent='●';d.classList.add('filled')}else{d.textContent='';d.classList.remove('filled')}})}
+  function onNum(n){
+    if(code.length>=4)return;code+=n;updateDigits();
+    if(code.length===4){
+      if(code===PASSCODE){errMsg.classList.remove('show');digitEls.forEach(d=>{d.style.background='#d4f7d4';d.style.borderColor='#4CAF50'});setTimeout(()=>gotoPage(2),400)}
+      else{errMsg.classList.add('show');digitEls.forEach(d=>d.classList.add('shake'));setTimeout(()=>{code='';updateDigits();errMsg.classList.remove('show');digitEls.forEach(d=>{d.classList.remove('shake');d.style.background='';d.style.borderColor=''})},800)}
+    }
+  }
+  document.querySelectorAll('.num[data-n]').forEach(b=>b.addEventListener('click',()=>onNum(b.dataset.n)));
+  document.getElementById('clrBtn').addEventListener('click',()=>{code='';updateDigits();errMsg.classList.remove('show')});
+  document.addEventListener('keydown',e=>{if(!allPages[0].classList.contains('active'))return;if(/^[0-9]$/.test(e.key))onNum(e.key);else if(e.key==='Backspace'){code=code.slice(0,-1);updateDigits()}});
+  const board=document.getElementById('puzzleBoard'),donePop=document.getElementById('puzzleDone');
+  const moveCountEl=document.getElementById('moveCount'),curMovesEl=document.getElementById('curMoves');
+  let pieces=[],correct=0,moves=0,pw,ph,bw,bh;
+  function initPuzzle(){board.innerHTML='';pieces=[];correct=0;moves=0;curMovesEl.textContent='0';donePop.classList.remove('show');bw=board.offsetWidth;bh=board.offsetHeight;if(!bw){setTimeout(initPuzzle,100);return}pw=bw/3;ph=bh/3;for(let r=0;r<3;r++)for(let c=0;c<3;c++){const p=document.createElement('div');p.className='puzzle-piece';p.style.cssText=`width:${pw}px;height:${ph}px;background-image:url(${PUZZLE_IMAGE});background-position:${-c*pw}px ${-r*ph}px;background-size:${bw}px ${bh}px`;p.dataset.cx=c*pw;p.dataset.cy=r*ph;p.dataset.ok='false';addDrag(p);board.appendChild(p);pieces.push(p)}shuffle()}
+  function shuffle(){pieces.forEach(p=>{p.style.left=Math.random()*(bw-pw)+'px';p.style.top=Math.random()*(bh-ph)+'px';p.classList.remove('correct');p.dataset.ok='false'});correct=0}
+  function addDrag(p){let dragging=false,ox,oy,sx,sy;function start(e){if(p.dataset.ok==='true')return;e.preventDefault();dragging=true;p.classList.add('dragging');const rect=p.getBoundingClientRect();const cx=e.touches?e.touches[0].clientX:e.clientX;const cy=e.touches?e.touches[0].clientY:e.clientY;ox=cx-rect.left;oy=cy-rect.top;sx=parseFloat(p.style.left);sy=parseFloat(p.style.top);p.style.zIndex=100;document.addEventListener('mousemove',move);document.addEventListener('touchmove',move,{passive:false});document.addEventListener('mouseup',end);document.addEventListener('touchend',end)}function move(e){if(!dragging)return;e.preventDefault();const cx=e.touches?e.touches[0].clientX:e.clientX;const cy=e.touches?e.touches[0].clientY:e.clientY;const br=board.getBoundingClientRect();p.style.left=Math.max(0,Math.min(cx-br.left-ox,bw-pw))+'px';p.style.top=Math.max(0,Math.min(cy-br.top-oy,bh-ph))+'px'}function end(){if(!dragging)return;dragging=false;p.classList.remove('dragging');document.removeEventListener('mousemove',move);document.removeEventListener('touchmove',move);document.removeEventListener('mouseup',end);document.removeEventListener('touchend',end);const cx=parseFloat(p.style.left),cy=parseFloat(p.style.top);if(Math.abs(cx-sx)>5||Math.abs(cy-sy)>5){moves++;curMovesEl.textContent=moves}const dx=parseFloat(p.dataset.cx),dy=parseFloat(p.dataset.cy);if(Math.abs(cx-dx)<16&&Math.abs(cy-dy)<16){p.style.left=dx+'px';p.style.top=dy+'px';p.classList.add('correct');p.dataset.ok='true';p.style.zIndex=1;correct++;if(correct===9){moveCountEl.textContent=moves;donePop.classList.add('show');spawnHearts()}}else p.style.zIndex=1}p.addEventListener('mousedown',start);p.addEventListener('touchstart',start,{passive:false})}
+  function spawnHearts(){for(let i=0;i<16;i++)setTimeout(()=>{const h=document.createElement('div');h.className='heart';h.textContent='❤️';h.style.cssText=`left:${Math.random()*100}%;bottom:0;font-size:${10+Math.random()*18}px;position:absolute`;board.appendChild(h);setTimeout(()=>h.remove(),2500)},i*100)}
+  document.getElementById('shuffleBtn').addEventListener('click',()=>{shuffle();moves=0;curMovesEl.textContent='0';donePop.classList.remove('show')});
+  document.getElementById('replayBtn').addEventListener('click',initPuzzle);
+  document.getElementById('nextPuzz').addEventListener('click',()=>gotoPage(4));
+  function rain(n){for(let i=0;i<n;i++)setTimeout(()=>{const ic=document.createElement('div');ic.className='rain-icon';const sz=28+Math.random()*28;ic.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-delay:${Math.random()*.4}s`;document.body.appendChild(ic);setTimeout(()=>ic.remove(),3000)},i*80)}
+  document.getElementById('hugCard').addEventListener('click',()=>{rain(18);if(navigator.vibrate)navigator.vibrate(30)});
+  document.getElementById('kissCard').addEventListener('click',()=>{rain(18);if(navigator.vibrate)navigator.vibrate(30)});
+  gotoPage(1);
+})();
+</script>
+</body>
+</html>
